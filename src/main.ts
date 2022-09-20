@@ -10,6 +10,7 @@
  *
  */
 
+import cors from "cors";
 import express from "express";
 import morgan from "morgan";
 import { PORT } from "../config/constant";
@@ -19,9 +20,13 @@ import health from "./health/index";
 const app = express();
 const port = PORT || 3000;
 
+const corsOptions = {
+  origin: "http://localhost:3001",
+};
 app.use(morgan("dev"));
+app.use(cors(corsOptions));
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
   const body = req.body;
@@ -30,7 +35,7 @@ app.get("/", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+  console.log(`Listening at http://localhost:${port}`);
 });
 
 app.use("/health", health);
