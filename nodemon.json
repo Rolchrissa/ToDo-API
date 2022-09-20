@@ -6,7 +6,8 @@
     "node_modules"
   ],
   "watch": [
-    "src"
+    "src",
+    "config"
   ],
   "ext": "ts,json,js,env",
   "restartable": "rs",
