@@ -1,7 +1,8 @@
 import { Router } from "express";
+import { registerUser } from "src/services/user/register";
 import { validatePassword } from "../../utils/crypto/bcrypt";
 import { generateAccessToken, validateToken } from "../../utils/crypto/jwt";
-import { createUser, getUser } from "../../utils/database/user";
+import { getPublicUser, getUser } from "../../utils/database/user";
 const router = Router();
 
 router.post("/login", async (req, res) => {
@@ -29,7 +30,6 @@ router.post("/login", async (req, res) => {
         account: {
           id: user.id,
           username: user.username,
-          email: user.email,
           accessToken,
           img: user.img,
         },
@@ -42,43 +42,8 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.get("/profile", validateToken, (req, res) => {
-  res.json({
-    message: "user profile",
-    user: req.user,
-  });
-});
-
 router.post("/register", async (req, res) => {
-  const { username, email, password } = req.body;
-  // console.log(req.body);
-
-  if (!username || !email || !password) {
-    return res.status(400).json({ message: "Bad Request" });
-  }
-  const user = await getUser(username);
-  if (user) return res.json({ error: "user already exists" }).status(400);
-  let user_data = {
-    username,
-    email,
-  };
-  const token = generateAccessToken(user_data);
-  const newUser = await createUser({
-    username,
-    email,
-    password,
-    token,
-    img: "",
-  });
-  if (newUser) {
-    res.status(201).json({
-      message: "user created",
-    });
-  } else {
-    res.status(400).json({
-      message: "user not created",
-    });
-  }
+  registerUser(req, res);
 });
 
 export default router;

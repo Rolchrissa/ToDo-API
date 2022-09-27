@@ -1,10 +1,14 @@
+
+SHELL = /bin/bash
+
 .PHONY: deps
 deps:
-	@npm install
+	@echo "Installing dependencies for $(PWD)..."
+	 docker run -it --volume "$(PWD)/:/app" -w /app --name deps node:16.17.0 npm install
 
 .PHONY: build
 build:
-	@npm run build:bundle
+	@docker run -it --volume "$(PWD)/:/app" -w /app  node:16.17.0 npm run build:bundle
 
 .PHONY: clean
 clean:
@@ -19,8 +23,14 @@ reinit: fullclean deps
 
 .PHONY: rundev
 rundev:
-	@npm run dev
+	@docker run -it --volume "$(PWD)/:/app" -p "3000:3000"  -w /app --user $(id -u):$(id -g) node:16.17.0 npm run dev
 
 .PHONY: fullrestart
 fullrestart: fullclean deps build rundev
 
+
+npm/install: ACTION=install
+npm/update: ACTION=update
+npm/require: ACTION=install $(module)
+npm npm/install npm/update npm/require:
+	@docker run -it --volume "$(PWD)/:/app" node:16.17.0 npm $(ACTION) --loglevel=warn
