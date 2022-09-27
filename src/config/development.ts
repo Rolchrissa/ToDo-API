@@ -5,6 +5,7 @@ envConfig();
 const defaults = {
   SERVER: {
     PORT: 3000,
+    CORS: "localhost:3001",
   },
   MONGODB: {
     DB: "test",
@@ -18,13 +19,14 @@ const defaults = {
   JWT_SECRET: "secret",
   SENDGRID: {
     API_KEY: "SG.1234567890",
-    API_EMAIL: "S",
+    API_EMAIL: "example@example.com",
   },
 };
 
 export = {
   SERVER: {
     PORT: validate.isPort(process.env.PORT) || defaults.SERVER.PORT,
+    CORS: process.env.WEB_URL || defaults.SERVER.CORS,
   },
   MONGODB: {
     DB: process.env.MONGO_DB || defaults.MONGODB.DB,
