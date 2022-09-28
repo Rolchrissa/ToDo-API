@@ -17,7 +17,7 @@ export const validateToken = (req: any, res: any, next) => {
   }
   jwt.verify(accessToken, JWT.SECRET, (err, user) => {
     if (err) {
-      return res.status(401).json({
+      return res.status(498).json({
         message: "Invalid Token",
       });
     }
@@ -30,7 +30,7 @@ export const validateUser = (req: any, res: any, next) => {
   const { user } = req;
   const { username } = req.body;
   if (user.username !== username) {
-    return res.status(401).json({
+    return res.status(418).json({
       message: "Invalid User",
     });
   }
