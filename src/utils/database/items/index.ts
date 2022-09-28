@@ -34,7 +34,7 @@ const createItem = async (item_data: any) => {
     });
     await item.save();
     console.log("item created");
-    return true;
+    return item;
   } catch (error: any) {
     console.log(
       `item from ${item_data.username} already exists \n` +
