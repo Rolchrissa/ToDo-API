@@ -10,11 +10,12 @@ import {
 
 const router = express.Router();
 
-router.get("/all", validateToken, validateUser, async (req, res) => {
+router.post("/all", validateToken, validateUser, async (req, res) => {
   res.json(await getItems(req.body.username)).status(200);
 });
 router.post("/", validateToken, validateUser, async (req, res) => {
-  if (await createItem(req.body)) res.json(req.body).status(200);
+  const item = await createItem(req.body);
+  if (await item) res.json(item).status(200);
   else res.json({ message: "error" }).status(500);
 });
 
