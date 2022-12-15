@@ -4,10 +4,11 @@
   "description": "Template for Node.js with TypeScript and esbuild",
   "main": "./src/main.ts",
   "scripts": {
-    "test": "echo \"crea test pls\"",
     "dev": "nodemon -r tsconfig-paths/register ./src/main.ts",
     "lint": "ts-standard",
     "tsc": "tsc",
+    "test": "vitest",
+    "coverage": "vitest run --coverage",
     "start": "node build/bundle/main.js",
     "build": "tsc --build tsconfig.json",
     "build:watch": "tsc --build tsconfig.json --watch",
@@ -48,7 +49,8 @@
     "ts-node-dev": "1.1.8",
     "ts-standard": "11.0.0",
     "tsconfig-paths": "^4.1.0",
-    "typescript": "4.7.2"
+    "typescript": "4.7.2",
+    "vitest": "0.23.4"
   },
   "eslintConfig": {
     "parserOptions": {

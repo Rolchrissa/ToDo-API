@@ -1,5 +1,5 @@
 import CONFIG from "src/config";
-import { Mail } from "../../types/mails.types";
+import { Mail } from "../../types/mails";
 const sgMail = require("@sendgrid/mail");
 const { SENDGRID } = CONFIG;
 sgMail.setApiKey(SENDGRID.API_KEY);

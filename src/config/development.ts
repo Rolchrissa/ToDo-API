@@ -6,6 +6,7 @@ const defaults = {
   SERVER: {
     PORT: 3000,
     CORS: "localhost:3001",
+    HOST: "localhost",
   },
   MONGODB: {
     DB: "test",
@@ -27,6 +28,7 @@ export = {
   SERVER: {
     PORT: validate.isPort(process.env.PORT) || defaults.SERVER.PORT,
     CORS: process.env.WEB_URL || defaults.SERVER.CORS,
+    HOST: process.env.HOST || defaults.SERVER.HOST,
   },
   MONGODB: {
     DB: process.env.MONGO_DB || defaults.MONGODB.DB,

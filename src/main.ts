@@ -14,10 +14,7 @@ import cors from "cors";
 import express from "express";
 import morgan from "morgan";
 import CONFIG from "src/config";
-import auth from "src/router/auth";
-import health from "src/router/health";
-import items from "src/router/items";
-import profile from "src/router/profile";
+import { router } from "src/router";
 
 const app = express();
 const { SERVER } = CONFIG;
@@ -27,17 +24,15 @@ const corsOptions = {
   origin: "http://localhost:3001",
 };
 
-app.listen(port, () => console.log(`Listening at http://localhost:${port}`));
+app.listen(port, () =>
+  console.log(`Listening at http://${SERVER.HOST}:${port}`)
+);
 
 app.use(morgan("dev"));
 app.use(cors(corsOptions));
 app.use(express.json());
 
-app.use("/health", health);
-app.use("/auth", auth);
-app.use("/profile", profile);
-app.use("/items", items);
-
-app.get("/", (req, res) => res.json(req.body).status(200));
+app.use(router);
+app.get("/", (req: Request, res: any) => res.json(req.body).status(200));
 
 export default app;
