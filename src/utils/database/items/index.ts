@@ -3,16 +3,17 @@ import config from "src/config";
 import { Item } from "src/models/item";
 import { v4 as uuidv4 } from "uuid";
 const { MONGODB } = config;
+mongoose.set("strictQuery", true);
 
 const getItems = async (username: string) => {
   try {
     await mongoose.connect(`${MONGODB.URI}`);
     const item = await Item.find({ username: username });
-
+    console.log({ username, item });
     return item;
   } catch (error) {
     console.log(error);
-    return [];
+    return [{ message: "error" }];
   }
 };
 
