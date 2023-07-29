@@ -32,6 +32,8 @@ const createItem = async (item_data: any) => {
       username: item_data.username,
       name: item_data.name,
       isDone: item_data.isDone,
+      expireAt: item_data.expireAt,
+      description: item_data.description,
     });
     await item.save();
     console.log("item created");
@@ -79,4 +81,4 @@ const deleteItem = async (item) => {
   }
 };
 
-export { getItems, createItem, getOneItem, updateItem, deleteItem };
+export { createItem, deleteItem, getItems, getOneItem, updateItem };

@@ -9,6 +9,8 @@ const item = new mongoose.Schema({
   username: { type: String },
   name: { type: String },
   isDone: { type: Boolean, default: false },
+  expireAt: { type: Date, required: false },
+  description: { type: String, required: false },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
 });
