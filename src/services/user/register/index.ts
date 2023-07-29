@@ -42,4 +42,4 @@ const activeUser = (req: any, res: any) => {
   });
 };
 
-export { registerUser };
+export { registerUser, activeUser };
