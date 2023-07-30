@@ -9,7 +9,6 @@ const getItems = async (username: string) => {
   try {
     await mongoose.connect(`${MONGODB.URI}`);
     const item = await Item.find({ username: username });
-    console.log({ username, item });
     return item;
   } catch (error) {
     console.log(error);
