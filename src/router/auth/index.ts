@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { registerUser } from "src/services/user/register";
 import { validatePassword } from "../../utils/crypto/bcrypt";
-import { generateAccessToken, validateToken } from "../../utils/crypto/jwt";
-import { getPublicUser, getUser } from "../../utils/database/user";
+import { generateAccessToken } from "../../utils/crypto/jwt";
+import { getUser } from "../../utils/database/user";
 const router = Router();
 
 router.post("/login", async (req, res) => {
