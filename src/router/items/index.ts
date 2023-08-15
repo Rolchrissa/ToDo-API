@@ -27,12 +27,13 @@ router.get("/:name", validateToken, validateUser, async (req, res) => {
 
 router.put("/:name", validateToken, validateUser, async (req, res) => {
   const { name } = req.params;
-  const { username, isDone, newName } = req.body;
+  const { username, isDone, newName, description } = req.body;
   const item = await getOneItem(username, name);
   if (item) {
     const newItem = {
       name: newName,
       isDone: isDone,
+      description: description,
       updatedAt: Date.now(),
     };
     if (await updateItem(item, newItem)) res.json(newItem).status(200);
