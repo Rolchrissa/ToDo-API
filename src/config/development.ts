@@ -17,7 +17,10 @@ const defaults = {
     PROTOCOL: "mongodb",
     URI: "mongodb://localhost:27017",
   },
-  JWT_SECRET: "secret",
+  JWT: {
+    SECRET: "secret",
+    REFRESH_SECRET: "refresh_secret",
+  },
   SENDGRID: {
     API_KEY: "SG.1234567890",
     API_EMAIL: "example@example.com",
@@ -42,7 +45,9 @@ export = {
       defaults.MONGODB.URI,
   },
   JWT: {
-    SECRET: process.env.JWT_SECRET || defaults.JWT_SECRET,
+    SECRET: process.env.JWT_SECRET || defaults.JWT.SECRET,
+    REFRESH_SECRET:
+      process.env.JWT_REFRESH_SECRET || defaults.JWT.REFRESH_SECRET,
   },
   SENDGRID: {
     API_KEY: process.env.SENDGRID_API_KEY || defaults.SENDGRID.API_KEY,
