@@ -54,16 +54,20 @@ router.post("/register", async (req, res) => {
 
 //refrecsh token
 router.post("/token", (req, res) => {
-  const refreshToken = req.body.token.refreshToken;
-  console.log({ body: req.body });
-  if (!refreshToken) return res.sendStatus(401);
-  // if (!refreshTokens.includes(refreshToken)) return res.sendStatus(403);
-  jwt.verify(refreshToken, JWT.REFRESH_SECRET, (err, user) => {
-    console.log({ refreshToken, err });
-    if (err) return res.sendStatus(403);
-    const accessToken = generateAccessToken({ username: user.username });
-    res.json({ ...accessToken });
-  });
+  try {
+    const refreshToken = req.body.token.refreshToken;
+    console.log({ body: req.body });
+    if (!refreshToken) return res.sendStatus(401);
+    jwt.verify(refreshToken, JWT.REFRESH_SECRET, (err, user: any) => {
+      console.log({ refreshToken, err });
+      if (err) return res.sendStatus(403);
+      const accessToken = generateAccessToken({ username: user.username });
+      res.json({ ...accessToken });
+    });
+  } catch (err) {
+    console.log("refreshtoken error: ", err);
+    res.sendStatus(501);
+  }
 });
 
 export default router;

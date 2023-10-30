@@ -20,18 +20,38 @@ const app = express();
 const { SERVER } = CONFIG;
 const port = SERVER.PORT || 3000;
 
+// var whitelist = [
+//   "http://localhost:3001",
+//   "http://localhost:3000",
+//   "https://zql2g0k4-3001.brs.devtunnels.ms",
+// ];
+// var corsOptions = {
+//   origin: function (origin, callback) {
+//     if (whitelist.indexOf(origin) !== -1) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error("Not allowed by CORS"));
+//     }
+//   },
+// };
 const corsOptions = {
-  origin: "http://localhost:3001",
+  origin: [
+    "http://localhost:3001",
+    "http://localhost:3000",
+    "https://zql2g0k4-3001.brs.devtunnels.ms",
+    "http://192.168.100.32:3001",
+  ],
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
+  credentials: true,
 };
+
+app.use(cors(corsOptions));
+app.use(morgan("dev"));
+app.use(express.json());
 
 app.listen(port, () =>
   console.log(`Listening at http://${SERVER.HOST}:${port}`)
 );
-
-app.use(morgan("dev"));
-app.use(cors(corsOptions));
-app.use(express.json());
-
 app.use(router);
 app.get("/", (req: Request, res: any) => res.json(req.body).status(200));
 

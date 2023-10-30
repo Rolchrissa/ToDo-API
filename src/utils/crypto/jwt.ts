@@ -8,8 +8,8 @@ export const generateAccessToken = (user: any) => {
 };
 
 export const generateTokens = (user: any) => {
-  const accessToken = jwt.sign(user, JWT.SECRET, { expiresIn: "1m" });
-  const refreshToken = jwt.sign(user, JWT.REFRESH_SECRET, { expiresIn: "7d" }); // Puedes ajustar la duración según tus necesidades
+  const accessToken = jwt.sign(user, JWT.SECRET, { expiresIn: "1h" });
+  const refreshToken = jwt.sign(user, JWT.REFRESH_SECRET, { expiresIn: "7d" });
 
   return { accessToken, refreshToken };
 };
@@ -52,11 +52,12 @@ export const validateToken = (req: any, res: any, next) => {
 
 export const validateUser = (req: any, res: any, next) => {
   const { user } = req;
-  const { username } = req.body;
+  const { username } = req.headers;
   if (user.username !== username) {
-    return res.status(418).json({
+    return res.status(404).json({
       message: "Invalid User",
     });
   }
+  req.username = username;
   next();
 };
